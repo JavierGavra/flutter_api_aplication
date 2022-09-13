@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_flutter_3/main_menu.dart';
-import 'package:tugas_flutter_3/movie_detail_page.dart';
+import 'package:tugas_flutter_3/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(backgroundColor: Color(0xff2B2B2B)),
           scaffoldBackgroundColor: Color(0xff171010),
           fontFamily: 'Lato'),
-      home: MainMenu(),
+      home: SplashScreen(),
     );
   }
 }

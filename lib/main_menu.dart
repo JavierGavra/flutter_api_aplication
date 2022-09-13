@@ -8,6 +8,7 @@ import 'package:tugas_flutter_3/API/movie_api_upcoming.dart';
 import 'package:tugas_flutter_3/detail_movie.dart';
 import 'package:tugas_flutter_3/favorite_page.dart';
 import 'package:tugas_flutter_3/home_page.dart';
+import 'package:tugas_flutter_3/search_page.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
@@ -52,7 +53,10 @@ class _MainMenuState extends State<MainMenu> {
         onChangedTab: onChangedTab,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => SearchPage()));
+        },
         backgroundColor: Color.fromARGB(255, 39, 104, 157),
         child: Icon(
           Icons.search,

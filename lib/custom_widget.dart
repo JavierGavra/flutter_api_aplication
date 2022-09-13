@@ -130,7 +130,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       notchMargin: 8,
       color: Color(0xff2B2B2B),
       child: AnimatedContainer(
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds: 4),
         curve: Curves.fastOutSlowIn,
         height: widget.animate ? 52 : 0,
         child: Row(
@@ -149,7 +149,6 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     required Icon icon,
   }) {
     final isSelected = index == widget.index;
-
     return IconTheme(
       data: IconThemeData(
         color: isSelected ? Colors.white : Color.fromARGB(255, 163, 163, 163),
@@ -160,6 +159,229 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         },
         icon: icon,
         iconSize: 26,
+      ),
+    );
+  }
+}
+
+// Button Like
+class LikeButton extends StatefulWidget {
+  const LikeButton({Key? key}) : super(key: key);
+
+  @override
+  State<LikeButton> createState() => _LikeButtonState();
+}
+
+class _LikeButtonState extends State<LikeButton> {
+  bool isOn = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          isOn = !isOn;
+        });
+        if (isOn) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Color.fromARGB(255, 23, 23, 23),
+              duration: Duration(seconds: 1),
+              content: Row(
+                children: [
+                  Icon(Icons.thumb_up, color: Colors.white, size: 18),
+                  SizedBox(width: 15),
+                  Text("Terimakasih masukannya"),
+                ],
+              )));
+        }
+      },
+      child: Container(
+        height: 36,
+        width: 36,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(40),
+            color: Color.fromARGB(255, 49, 49, 49)),
+        child: Icon(
+          isOn ? Icons.thumb_up_alt : Icons.thumb_up_outlined,
+          size: 20,
+          color: Color.fromARGB(255, 212, 212, 212),
+        ),
+      ),
+    );
+  }
+}
+
+// Button Dislike
+class DislikeButton extends StatefulWidget {
+  const DislikeButton({Key? key}) : super(key: key);
+
+  @override
+  State<DislikeButton> createState() => _DislikeButtonState();
+}
+
+class _DislikeButtonState extends State<DislikeButton> {
+  bool isOn = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          isOn = !isOn;
+        });
+        if (isOn) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Color.fromARGB(255, 23, 23, 23),
+              duration: Duration(seconds: 1),
+              content: Row(
+                children: [
+                  Icon(Icons.thumb_down, color: Colors.white, size: 18),
+                  SizedBox(width: 15),
+                  Text("Terimakasih masukannya"),
+                ],
+              )));
+        }
+      },
+      child: Container(
+        height: 36,
+        width: 36,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(40),
+            color: Color.fromARGB(255, 49, 49, 49)),
+        child: Icon(
+          isOn ? Icons.thumb_down_alt : Icons.thumb_down_outlined,
+          size: 20,
+          color: Color.fromARGB(255, 212, 212, 212),
+        ),
+      ),
+    );
+  }
+}
+
+// Button Favorite
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({Key? key}) : super(key: key);
+
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool isOn = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          isOn = !isOn;
+        });
+        if (isOn) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Color.fromARGB(255, 23, 23, 23),
+              duration: Duration(seconds: 1),
+              content: Row(
+                children: [
+                  Icon(Icons.favorite,
+                      color: Color.fromARGB(255, 213, 70, 70), size: 18),
+                  SizedBox(width: 15),
+                  Text("Ditambahkan ke Favorit"),
+                ],
+              )));
+        } else {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              backgroundColor: Color.fromARGB(255, 23, 23, 23),
+              duration: Duration(seconds: 1),
+              content: Row(
+                children: [
+                  Icon(Icons.favorite_border,
+                      color: Color.fromARGB(255, 213, 70, 70), size: 18),
+                  SizedBox(width: 15),
+                  Text("Dihapus Dari Favorit"),
+                ],
+              )));
+        }
+      },
+      child: Container(
+        height: 36,
+        width: 36,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(40),
+            color: Color.fromARGB(255, 49, 49, 49)),
+        child: Icon(
+          isOn ? Icons.favorite : Icons.favorite_border,
+          size: 20,
+          color: Color.fromARGB(255, 213, 70, 70),
+        ),
+      ),
+    );
+  }
+}
+
+// Banner Item
+class BannerItem extends StatelessWidget {
+  BannerItem(
+      {Key? key,
+      required this.gambar,
+      required this.judul,
+      required this.genre,
+      required this.reting})
+      : super(key: key);
+  String gambar, judul, genre, reting;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(14),
+            child: Container(
+              height: 180,
+              child: Image.asset(gambar,
+                  fit: BoxFit.cover, width: MediaQuery.of(context).size.width),
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            judul,
+            style: TextStyle(
+                color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 2),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                genre,
+                style: TextStyle(
+                  color: Color.fromARGB(255, 175, 175, 175),
+                  fontSize: 10,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.star,
+                    size: 11,
+                    color: Color.fromARGB(255, 196, 181, 48),
+                  ),
+                  SizedBox(width: 2),
+                  Text(
+                    reting,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 196, 181, 48),
+                      fontSize: 11,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

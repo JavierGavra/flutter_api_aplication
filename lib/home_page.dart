@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:tugas_flutter_3/custom_widget.dart';
 import 'package:tugas_flutter_3/API/movie_api_upcoming.dart';
 import 'package:tugas_flutter_3/detail_movie.dart';
-import 'package:tugas_flutter_3/main_menu.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -56,12 +56,42 @@ class _HomePageState extends State<HomePage> {
                 SliverAppBar(
                   title: Text("JMDB"),
                   centerTitle: true,
-                  leading: Icon(Icons.menu),
+                  leading: IconButton(
+                    icon: Icon(Icons.info_outline),
+                    onPressed: () {},
+                  ),
                   floating: true,
                   snap: true,
                 ),
                 SliverList(
                   delegate: SliverChildListDelegate([
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 280,
+                      color: Color.fromARGB(255, 23, 23, 23),
+                      child: CarouselSlider(
+                          options: CarouselOptions(
+                              autoPlay: true,
+                              autoPlayInterval: Duration(seconds: 3)),
+                          items: [
+                            BannerItem(
+                                gambar: "images/banner1.gif",
+                                judul: "Thor: Love and Thunder",
+                                genre: "Action, Adventure, Fantasy",
+                                reting: "6.8"),
+                            BannerItem(
+                                gambar: "images/banner2.gif",
+                                judul: "Top Gun: Maverick",
+                                genre: "Adventure, Drama",
+                                reting: "6.8"),
+                            BannerItem(
+                                gambar: "images/banner3.gif",
+                                judul: "Kimi no nawa",
+                                genre: "Animation, Romance, Fantasy, Drama",
+                                reting: "6.8"),
+                          ]),
+                    ),
+
                     // Popular List
                     Stack(
                       alignment: AlignmentDirectional.center,
@@ -254,7 +284,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SliverToBoxAdapter(
                   child: Container(
-                      height: MediaQuery.of(context).size.height / 2 / 2),
+                      height:
+                          MediaQuery.of(context).size.height / 2 / 2 / 2 / 2),
                 )
               ],
             )
