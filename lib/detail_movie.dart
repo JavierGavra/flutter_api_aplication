@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:transparent_image/transparent_image.dart';
 import 'package:tugas_flutter_3/API/movie_api_similiar_movie.dart';
 import 'package:tugas_flutter_3/API/movie_api_video.dart';
+import 'package:tugas_flutter_3/database/database_helper.dart';
+import 'package:tugas_flutter_3/database/movie_class.dart';
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,6 +23,7 @@ class _DetailMovieState extends State<DetailMovie> {
   MovieApiDetail? movieApiDetail;
   MovieApiVideo? _movieApiVideo;
   MovieApiSimiliarMovie? _movieApiSimiliarMovie;
+  List<MovieModel>? dataListMovie;
   bool isLoaded = false;
 
   void getAllListMovie() async {
@@ -36,6 +39,7 @@ class _DetailMovieState extends State<DetailMovie> {
         MovieApiVideo.fromJson(json.decode(resVideo.body.toString()));
     _movieApiSimiliarMovie = MovieApiSimiliarMovie.fromJson(
         json.decode(resSimiliar.body.toString()));
+    dataListMovie = await DatabaseHelper.instance.readAll();
     setState(() {
       isLoaded = true;
     });
@@ -264,7 +268,16 @@ class _DetailMovieState extends State<DetailMovie> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              FavoriteButton(),
+                              FavoriteButton(
+                                idFilm: movieApiDetail!.id!.toString(),
+                                nama: movieApiDetail!.title!.toString(),
+                                img: "https://themoviedb.org/t/p/w500" +
+                                    movieApiDetail!.posterPath!.toString(),
+                                tanggal:
+                                    movieApiDetail!.releaseDate!.toString(),
+                                rating: movieApiDetail!.voteAverage!.toString(),
+                                dataListMovie: dataListMovie!.toList(),
+                              ),
                               LikeButton(),
                               DislikeButton(),
                             ],

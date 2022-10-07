@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_flutter_3/database/database_helper.dart';
+import 'package:tugas_flutter_3/database/movie_class.dart';
 
 // Card film
 class FilmCard extends StatelessWidget {
@@ -183,7 +185,7 @@ class _LikeButtonState extends State<LikeButton> {
           isOn = !isOn;
         });
         if (isOn) {
-          Scaffold.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Color.fromARGB(255, 23, 23, 23),
               duration: Duration(seconds: 1),
               content: Row(
@@ -230,7 +232,7 @@ class _DislikeButtonState extends State<DislikeButton> {
           isOn = !isOn;
         });
         if (isOn) {
-          Scaffold.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Color.fromARGB(255, 23, 23, 23),
               duration: Duration(seconds: 1),
               content: Row(
@@ -260,7 +262,17 @@ class _DislikeButtonState extends State<DislikeButton> {
 
 // Button Favorite
 class FavoriteButton extends StatefulWidget {
-  const FavoriteButton({Key? key}) : super(key: key);
+  FavoriteButton(
+      {Key? key,
+      required this.idFilm,
+      required this.nama,
+      required this.img,
+      required this.tanggal,
+      required this.rating,
+      required this.dataListMovie})
+      : super(key: key);
+  String idFilm, nama, img, tanggal, rating;
+  List<MovieModel> dataListMovie;
 
   @override
   State<FavoriteButton> createState() => _FavoriteButtonState();
@@ -269,15 +281,39 @@ class FavoriteButton extends StatefulWidget {
 class _FavoriteButtonState extends State<FavoriteButton> {
   bool isOn = false;
 
+  void dataCheck() {
+    for (var i = 0; i < widget.dataListMovie.length; i++) {
+      if (widget.dataListMovie[i].nama == widget.nama) {
+        isOn = true;
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dataCheck();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         setState(() {
           isOn = !isOn;
         });
         if (isOn) {
-          Scaffold.of(context).showSnackBar(SnackBar(
+          var karyawan;
+          karyawan = MovieModel(
+              idFilm: widget.idFilm,
+              nama: widget.nama,
+              img: widget.img,
+              tanggal: widget.tanggal,
+              rating: widget.rating);
+          await DatabaseHelper.instance.create(karyawan);
+          print("${widget.nama} Ditambahkan ke Database");
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Color.fromARGB(255, 23, 23, 23),
               duration: Duration(seconds: 1),
               content: Row(
@@ -289,7 +325,9 @@ class _FavoriteButtonState extends State<FavoriteButton> {
                 ],
               )));
         } else {
-          Scaffold.of(context).showSnackBar(SnackBar(
+          await DatabaseHelper.instance.delete(int.parse(widget.idFilm));
+          print("${widget.nama} Dihapus dari Database");
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               backgroundColor: Color.fromARGB(255, 23, 23, 23),
               duration: Duration(seconds: 1),
               content: Row(
