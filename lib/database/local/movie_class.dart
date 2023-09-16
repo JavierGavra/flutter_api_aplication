@@ -12,7 +12,7 @@ class MovieFields {
 
 class MovieModel {
   final int? id;
-  final String idFilm;
+  final int idFilm;
   final String nama;
   final String img;
   final String tanggal;
@@ -29,7 +29,7 @@ class MovieModel {
 
   static MovieModel fromJson(Map<String, Object?> json) => MovieModel(
         id: json[MovieFields.id] as int?,
-        idFilm: json[MovieFields.idFilm] as String,
+        idFilm: json[MovieFields.idFilm] as int,
         nama: json[MovieFields.nama] as String,
         img: json[MovieFields.img] as String,
         tanggal: json[MovieFields.tanggal] as String,
@@ -46,12 +46,7 @@ class MovieModel {
       };
 
   MovieModel copy(
-          {int? id,
-          String? idFilm,
-          String? nama,
-          String? img,
-          String? tanggal,
-          String? rating}) =>
+          {int? id, int? idFilm, String? nama, String? img, String? tanggal, String? rating}) =>
       MovieModel(
           id: id ?? this.id,
           idFilm: idFilm ?? this.idFilm,

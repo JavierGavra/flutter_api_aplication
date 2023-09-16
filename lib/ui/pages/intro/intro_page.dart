@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:tugas_flutter_3/main_menu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tugas_flutter_3/ui/pages/home/home_page.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+class IntroPage extends StatefulWidget {
+  const IntroPage({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<IntroPage> createState() => _IntroPageState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
+class _IntroPageState extends State<IntroPage> with TickerProviderStateMixin {
   bool _anim1 = false;
   bool _anim2 = false;
   bool _anim3 = false;
@@ -19,7 +19,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Timer(Duration(milliseconds: 900), (() {
       setState(() {
@@ -125,8 +124,7 @@ class _SplashScreenState extends State<SplashScreen>
               width: _anim4 ? MediaQuery.of(context).size.width : 0,
               height: _anim4 ? 500 : 0,
               decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(280)),
+                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(280)),
                   color: Color(0xff3B3B3B)),
             ),
           ),
@@ -140,10 +138,7 @@ class _SplashScreenState extends State<SplashScreen>
               children: [
                 Text(
                   "WELCOME TO",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20),
                 Text(
@@ -184,13 +179,17 @@ class _SplashScreenState extends State<SplashScreen>
               child: Container(
                 height: 50,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => MainMenu()));
+                  onPressed: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    await prefs.setBool('alreadyIntro', true);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                      (route) => false,
+                    );
                   },
-                  child: Text("Let's Go",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  style: ElevatedButton.styleFrom(primary: Color(0xff3B3B3B)),
+                  child: Text("Let's Go", style: TextStyle(fontWeight: FontWeight.bold)),
+                  style: ElevatedButton.styleFrom(backgroundColor: Color(0xff3B3B3B)),
                 ),
               ),
             ),
