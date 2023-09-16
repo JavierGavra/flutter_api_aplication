@@ -1,13 +1,11 @@
 import 'dart:async';
-import 'package:tugas_flutter_3/database/movie_class.dart';
+import 'package:tugas_flutter_3/database/local/movie_class.dart';
 import 'package:sqflite/sqflite.dart';
 // import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
 class DatabaseHelper {
-  static final _dbName = 'myDatabase.db';
-  static final _dbVersion = 1;
-  static final _tableName = 'myTable';
+  static final _dbName = 'movie.db';
   static final columnId = '_id';
   static final columnName = 'name';
 
@@ -19,7 +17,7 @@ class DatabaseHelper {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('movie.db');
+    _database = await _initDB(_dbName);
     return _database!;
   }
 
@@ -37,18 +35,13 @@ class DatabaseHelper {
     await db.execute('''
       CREATE TABLE $tableMovie(
         ${MovieFields.id} $idType,
-        ${MovieFields.idFilm} $textType,
+        ${MovieFields.idFilm} INTEGER,
         ${MovieFields.nama} $textType,
         ${MovieFields.img} $textType,
         ${MovieFields.tanggal} $textType,
         ${MovieFields.rating} $textType
       )''');
   }
-
-// {
-//   "_id":12,
-//   "name":"saheb"
-// }
 
   Future<MovieModel> create(MovieModel movie) async {
     final db = await instance.database;

@@ -1,10 +1,10 @@
-class MovieApiVideo {
+class MovieVideoModel {
   int? id;
   List<Results>? results;
 
-  MovieApiVideo({this.id, this.results});
+  MovieVideoModel({this.id, this.results});
 
-  MovieApiVideo.fromJson(Map<String, dynamic> json) {
+  MovieVideoModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     if (json['results'] != null) {
       results = <Results>[];

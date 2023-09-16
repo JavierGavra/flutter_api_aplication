@@ -1,4 +1,4 @@
-class MovieApiDetail {
+class MovieDetailModel {
   bool? adult;
   String? backdropPath;
   BelongsToCollection? belongsToCollection;
@@ -25,34 +25,35 @@ class MovieApiDetail {
   num? voteAverage;
   int? voteCount;
 
-  MovieApiDetail(
-      {this.adult,
-      this.backdropPath,
-      this.belongsToCollection,
-      this.budget,
-      this.genres,
-      this.homepage,
-      this.id,
-      this.imdbId,
-      this.originalLanguage,
-      this.originalTitle,
-      this.overview,
-      this.popularity,
-      this.posterPath,
-      this.productionCompanies,
-      this.productionCountries,
-      this.releaseDate,
-      this.revenue,
-      this.runtime,
-      this.spokenLanguages,
-      this.status,
-      this.tagline,
-      this.title,
-      this.video,
-      this.voteAverage,
-      this.voteCount});
+  MovieDetailModel({
+    this.adult,
+    this.backdropPath,
+    this.belongsToCollection,
+    this.budget,
+    this.genres,
+    this.homepage,
+    this.id,
+    this.imdbId,
+    this.originalLanguage,
+    this.originalTitle,
+    this.overview,
+    this.popularity,
+    this.posterPath,
+    this.productionCompanies,
+    this.productionCountries,
+    this.releaseDate,
+    this.revenue,
+    this.runtime,
+    this.spokenLanguages,
+    this.status,
+    this.tagline,
+    this.title,
+    this.video,
+    this.voteAverage,
+    this.voteCount,
+  });
 
-  MovieApiDetail.fromJson(Map<String, dynamic> json) {
+  MovieDetailModel.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
     belongsToCollection = json['belongs_to_collection'] != null
@@ -122,19 +123,16 @@ class MovieApiDetail {
     data['popularity'] = this.popularity;
     data['poster_path'] = this.posterPath;
     if (this.productionCompanies != null) {
-      data['production_companies'] =
-          this.productionCompanies!.map((v) => v.toJson()).toList();
+      data['production_companies'] = this.productionCompanies!.map((v) => v.toJson()).toList();
     }
     if (this.productionCountries != null) {
-      data['production_countries'] =
-          this.productionCountries!.map((v) => v.toJson()).toList();
+      data['production_countries'] = this.productionCountries!.map((v) => v.toJson()).toList();
     }
     data['release_date'] = this.releaseDate;
     data['revenue'] = this.revenue;
     data['runtime'] = this.runtime;
     if (this.spokenLanguages != null) {
-      data['spoken_languages'] =
-          this.spokenLanguages!.map((v) => v.toJson()).toList();
+      data['spoken_languages'] = this.spokenLanguages!.map((v) => v.toJson()).toList();
     }
     data['status'] = this.status;
     data['tagline'] = this.tagline;
